@@ -5,7 +5,7 @@ Python interface for the INFICON SQM-160 deposition monitor.
 ## Installation
 
 ```bash
-pip install sqm160
+pip install -e .
 
 ```
 

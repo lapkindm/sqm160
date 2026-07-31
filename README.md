@@ -15,7 +15,12 @@ pip install -e .
 from sqm160 import SQM160
 
 with SQM160() as sqm:
-    print(sqm.firmware_version())
+
+    print("Average rate      :", sqm.average_rate())
+    print("Average thickness :", sqm.average_thickness())
+
+    print("Sensor 1 rate     :", sqm.sensor_rate(1))
+    print("Sensor 1 thickness:", sqm.sensor_thickness(1))
 
 ```
 

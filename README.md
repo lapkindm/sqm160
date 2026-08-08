@@ -399,28 +399,32 @@ with SQM160() as sqm:
 
 The following SQM-160 commands are currently implemented:
 
-| Command | Description | Python method |
+| SQM-160 command | Description | Python method |
 |---|---|---|
 | `@` | Firmware version | `firmware_version()` |
-| `B?` / `B_...` | System 1 parameters | `system_parameters()` / `set_system_parameters()` |
-| `C?` / `C_...` | System 2 parameters | `system_parameters2()` / `set_system_parameters2()` |
-| `A<n>?` / `A<n>...` | Film parameters | `film_parameters()` / `set_film_parameters()` |
-| `D<n>` | Update active film | `set_active_film()` |
+| `A<n>?` | Read film parameters | `film_parameters()` |
+| `A<n>...` | Update film parameters | `set_film_parameters()` |
+| `B?` | Read System 1 parameters | `system_parameters()` |
+| `B ...` | Update System 1 parameters | `set_system_parameters()` |
+| `C?` | Read System 2 parameters | `system_parameters2()` |
+| `C ...` | Update System 2 parameters | `set_system_parameters2()` |
+| `D<n>` | Select active film | `select_film()` |
 | `J` | Number of installed channels | `channel_count()` |
 | `L<n>` | Sensor deposition rate | `sensor_rate()` |
 | `M` | Average deposition rate | `average_rate()` |
 | `N<n>` | Sensor thickness | `sensor_thickness()` |
-| `O<n>` | Sensor frequency | `sensor_frequency()` |
 | `O` | Average thickness | `average_thickness()` |
-| `P<n>` | Sensor crystal life | `sensor_life()` |
+| `P<n>` | Sensor frequency | `sensor_frequency()` |
+| `R<n>` | Sensor crystal life | `sensor_life()` |
 | `S` | Reset average measurements | `reset_measurement()` |
-| `T` | Reset elapsed time | `reset_time()` |
+| `T` | Reset elapsed deposition time | `reset_time()` |
 | `U?` | Shutter status | `shutter_status()` |
 | `U0` | Close shutter | `close_shutter()` |
 | `U1` | Open shutter | `open_shutter()` |
-| `W` | All sensor measurements | `sensor_measurements()` |
+| `W` | Rate, thickness and frequency for all sensors | `sensor_measurements()` |
 | `Y` | Power-up reset flag | `power_up_reset()` |
-| `Z` | Reset film and system parameters | `reset()` / command-specific interface |
+| `Z` | Restore default film and system parameters | `restore_defaults()` |
+
 
 Some commands described by the SQM-160 manual are intentionally not exposed
 as high-level convenience methods yet.

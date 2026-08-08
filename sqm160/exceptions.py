@@ -15,6 +15,14 @@ class DeviceBusyError(SQM160Error):
     """The SQM-160 USB interface is already in use."""
 
 
+class ProtocolError(SQM160Error):
+    """Malformed protocol packet or unexpected response."""
+
+
+class CRCError(ProtocolError):
+    """CRC verification failed."""
+    
+
 class USBCommunicationError(SQM160Error):
     """A USB communication error occurred."""
 
@@ -23,9 +31,9 @@ class USBTimeoutError(USBCommunicationError):
     """The device did not respond before the timeout expired."""
 
 
-class ProtocolError(SQM160Error):
-    """Malformed protocol packet or unexpected response."""
+class SerialCommunicationError(SQM160Error):
+    """Serial communication failed."""
 
 
-class CRCError(ProtocolError):
-    """CRC verification failed."""
+class SerialTimeoutError(SerialCommunicationError):
+    """Serial communication timed out."""

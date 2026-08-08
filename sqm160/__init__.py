@@ -9,6 +9,8 @@ Example
 ...     print(sqm.firmware_version())
 """
 
+from .serial import SerialTransport
+
 from .device import SQM160
 
 from .models import (
@@ -39,6 +41,7 @@ except PackageNotFoundError:
 
 __all__ = [
     "SQM160",
+    "SerialTransport",
 
     # Data models
     "SensorMeasurement",
@@ -51,6 +54,8 @@ __all__ = [
     "SQM160Error",
     "DeviceNotFoundError",
     "DeviceBusyError",
+    "ProtocolError",
+    "CRCError",
     "USBCommunicationError",
     "USBTimeoutError",
     "ProtocolError",

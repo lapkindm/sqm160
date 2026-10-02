@@ -29,6 +29,8 @@ from .exceptions import (
     USBTimeoutError,
     ProtocolError,
     CRCError,
+    SerialCommunicationError,
+    SerialTimeoutError,
 )
 
 from importlib.metadata import version, PackageNotFoundError
@@ -58,6 +60,6 @@ __all__ = [
     "CRCError",
     "USBCommunicationError",
     "USBTimeoutError",
-    "ProtocolError",
-    "CRCError",
+    "SerialCommunicationError",
+    "SerialTimeoutError",
 ]

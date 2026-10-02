@@ -93,6 +93,13 @@ with SQM160(transport=transport) as sqm:
 
 The default serial configuration is:
 
+| Parameter | Value |
+|---|---|
+| Baud rate | 19200 |
+| Data bits | 8 |
+| Parity | None |
+| Stop bits | 1 |
+| Timeout | 3 s |
 
 The serial transport uses the same SQM-160 command protocol as the USB
 transport.

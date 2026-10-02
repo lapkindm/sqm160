@@ -32,8 +32,8 @@ class SQM160Commands:
 
 
 
-    def _check_film(self, sensor: int) -> None:
-        self._check_range(sensor, 1, 99, "Film number")
+    def _check_film(self, film: int) -> None:
+        self._check_range(film, 1, 99, "Film number")
 
 
     # ---------------------------------------------------------

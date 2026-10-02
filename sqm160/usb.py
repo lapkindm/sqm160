@@ -172,7 +172,7 @@ class USBTransport:
                 and
                 (self.serial_number is None or serial == self.serial_number)
             ):
-                candidates.append(dev)
+                candidates.append((dev, manufacturer, product, serial))
     
         if not candidates:
             raise DeviceNotFoundError(
@@ -181,24 +181,18 @@ class USBTransport:
     
         if len(candidates) > 1:
     
-            serials = []
-    
-            for dev in candidates:
-                try:
-                    serials.append(
-                        usb.util.get_string(
-                            dev,
-                            dev.iSerialNumber,
-                        )
-                    )
-                except (usb.core.USBError, ValueError):
-                    serials.append("<unknown>")
+            serials = [
+                serial or "<unknown>"
+                for *_, serial in candidates
+            ]
     
             raise DeviceBusyError(
                 "Multiple matching SQM-160 devices found: "
                 + ", ".join(serials)
             )
     
+        dev, manufacturer, product, serial = candidates[0]
+
         if self.debug:
             print(
                 f"Found SQM-160: "
@@ -207,7 +201,7 @@ class USBTransport:
                 f"SN={serial}"
             )
 
-        return candidates[0]
+        return dev
 
 
     

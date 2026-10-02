@@ -377,6 +377,46 @@ class USBTransport:
 
     # ------------------------------------------------------------------
 
+    def discard_input(
+        self,
+        timeout: int = 5,
+        max_reads: int = 32,
+    ) -> None:
+        """
+        Drop any data pending on the IN endpoint.
+
+        Reads with a short timeout (ms) until nothing more arrives.
+        """
+
+        self._require_open()
+
+        for _ in range(max_reads):
+
+            try:
+
+                chunk = self.dev.read(
+                    EP_IN,
+                    READ_SIZE,
+                    timeout=timeout,
+                )
+
+            except usb.core.USBTimeoutError:
+                return
+
+            except usb.core.USBError as exc:
+
+                raise USBCommunicationError(
+                    str(exc)
+                ) from exc
+
+            if not chunk:
+                return
+
+            if self.debug:
+                print("USB DISCARD:", bytes(chunk).hex(" "))
+
+    # ------------------------------------------------------------------
+
     def ctrl_out(
         self, 
         request: int, 

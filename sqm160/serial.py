@@ -173,6 +173,34 @@ class SerialTransport:
             ) from exc
 
     # ------------------------------------------------------------------
+
+    def discard_input(self) -> None:
+        """
+        Drop any bytes waiting in the receive buffer.
+        """
+
+        self._require_open()
+
+        try:
+
+            waiting = self.ser.in_waiting
+
+            if waiting and self.debug:
+                print(
+                    "SERIAL DISCARD:",
+                    waiting,
+                    "bytes",
+                )
+
+            self.ser.reset_input_buffer()
+
+        except SerialException as exc:
+
+            raise SerialCommunicationError(
+                str(exc)
+            ) from exc
+
+    # ------------------------------------------------------------------
     # Read
     # ------------------------------------------------------------------
 

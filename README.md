@@ -105,6 +105,14 @@ The serial transport uses the same SQM-160 command protocol as the USB
 transport.
 
 
+## Stale responses
+
+SQM-160 responses do not identify the command they answer. If a response
+arrives only after its read timed out, it would be taken as the response
+to the next command. Before each command, the driver therefore discards
+any pending input (`discard_input()` of the transport; for USB this waits
+up to 5 ms for late data).
+
 ## Reading measurements
 
 ### Sensor measurements

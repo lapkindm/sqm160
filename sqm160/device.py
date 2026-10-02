@@ -50,6 +50,11 @@ class Transport(Protocol):
     def read(self) -> bytes:
         ...
 
+    # Optional:
+    #
+    # def discard_input(self) -> None:
+    #     """Drop pending input, called before each command."""
+
 
 # ----------------------------------------------------------------------
 # SQM-160 device
@@ -182,12 +187,30 @@ class SQM160(SQM160Commands):
     # Protocol
     # ------------------------------------------------------------------
 
+    def _discard_stale_input(self) -> None:
+        """
+        Drop bytes left over from an earlier exchange.
+
+        SQM-160 responses do not identify the command they answer. A
+        response that arrives after its read timed out would otherwise be
+        taken as the response to the next command.
+        """
+
+        discard = getattr(self.transport, "discard_input", None)
+
+        if discard is not None:
+            discard()
+
+    # ------------------------------------------------------------------
+
     def query(self, command: str) -> Response:
         """
         Send an SQM-160 command and return the parsed response.
         """
 
         packet = build_command(command)
+
+        self._discard_stale_input()
 
         self.transport.write(packet)
 
@@ -277,6 +300,8 @@ class SQM160(SQM160Commands):
         """
 
         packet = build_command(command)
+
+        self._discard_stale_input()
 
         self.transport.write(packet)
 
